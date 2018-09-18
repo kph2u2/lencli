@@ -24,13 +24,13 @@ module LenCLI
     private
 
     def extract_gps_coordinates_from_image_files
-      @results ||= gps_data_from_files
+      @results ||= gps_data_from_files.compact.sort
     end
 
     def gps_data_from_files
       @file_list.map do |matching_path|
         image_name_and_coordinates(matching_path)
-      end.compact
+      end
     end
 
     def image_name_and_coordinates(matching_path)
