@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'lencli/version'
+require 'lencli/version/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "lencli"
@@ -24,5 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "thor", "~> 0.20.0"
   spec.add_development_dependency "mini_magick", "~> 4.8.0"
-  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "byebug"
 end

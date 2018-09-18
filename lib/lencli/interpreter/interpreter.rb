@@ -1,6 +1,6 @@
 require "thor"
-require "lencli/commander"
-require "pry"
+require "lencli/commander/commander"
+require "lencli/version/version"
 
 module LenCLI
   class Interpreter < Thor
@@ -16,13 +16,13 @@ module LenCLI
     method_option :output_format,
       default: "csv", enum: ["csv", "html"], :aliases => "-of"
     method_option :output_path,
-      default: "./", :aliases => "-op"
+      default: "./lencli.html", :aliases => "-op"
 
     desc "gps_grab [SEARCH_PATH]",
          "Extract gps coordinates from image files."
 
     long_desc <<~LONGDESC
-      Recursively searches under the directory SEARCH_PATH for jpg images and
+      Recursively searches under the directory SEARCH_PATH for jpg files and
       extracts the gps latitude and longitude from the image file if location
       data is found.
       If a SEARCH_PATH is not provided, the current directory will be used as
@@ -45,9 +45,9 @@ module LenCLI
       LONGDESC
 
     def gps_grab(search_path=nil)
-      Commander.find_images_extract_gps(search_path, options[:output_format])
+      Commander.gps_grab(options.merge(search_path: search_path))
     rescue Commander::CommanderError => error
-      abort(error.message)
+      abort("Fatal error: #{error.message}")
     end
   end
 end

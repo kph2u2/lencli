@@ -2,8 +2,6 @@ require "spec_helper"
 
 module LenCLI
   describe 'LenCLI' do
-    before { allow(Commander).to receive(:find_images_extract_gps) }
-
     describe '.version' do
       it "displays a version number" do
         expect { LenCLI::Interpreter.new.version }
@@ -12,6 +10,8 @@ module LenCLI
     end
 
     describe '.gps_grab' do
+      before { allow(Commander).to receive(:find_images_extract_gps) }
+
       let(:interpreter) { LenCLI::Interpreter.new }
       let(:subject) { interpreter.gps_grab }
 

@@ -1,12 +1,30 @@
-require 'mini_magick'
-require 'csv'
-require "lencli/directory_search"
-require "pry"
+require "mini_magick"
 
 module LenCLI
-  class GPSSearchAction
+  class GPSExtractionAction
+    attr_reader :results
+
+    def self.call(*args)
+      self.new(*args).call
+    end
+
     def initialize(file_list)
       @file_list = file_list || []
+    end
+
+    def call
+      extract_gps_coordinates_from_image_files
+      self
+    end
+
+    def headers
+      ["Image Filename", "Lat", "Long"]
+    end
+
+    private
+
+    def extract_gps_coordinates_from_image_files
+      @results ||= gps_data_from_files
     end
 
     def gps_data_from_files

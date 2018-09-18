@@ -1,8 +1,8 @@
 module LenCLI
   class BaseOutputService
-		def initialize(output_format, gps_list)
-			@gps_list = gps_list
-			@output_format = output_format
-		end	
-	end
+    def initialize(action, output_path=nil)
+      @action = action
+      @output_path = output_path
+    end 
+  end
 end
