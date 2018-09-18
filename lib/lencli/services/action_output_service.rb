@@ -1,13 +1,12 @@
 require "lencli/output/csv_action_output"
 require "lencli/output/html_action_output"
+require "lencli/services/callable/callable"
 
 module LenCLI
   class ActionOutputService
     attr_reader :errors
 
-    def self.call(*args)
-      self.new(*args).call
-    end
+    include LenCLI::Callable
 
     def initialize(action, options)
       @errors = []
@@ -26,10 +25,6 @@ module LenCLI
         @errors << "Cannot write to #{@output_path} due to permissions."
       end
       self
-    end
-
-    def successful?
-      !@errors.any?
     end
 
     private

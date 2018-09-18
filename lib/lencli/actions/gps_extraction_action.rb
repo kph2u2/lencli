@@ -1,14 +1,14 @@
 require "mini_magick"
+require "lencli/services/callable/callable"
 
 module LenCLI
   class GPSExtractionAction
     attr_reader :results
 
-    def self.call(*args)
-      self.new(*args).call
-    end
+    include LenCLI::Callable
 
     def initialize(file_list)
+      @errors = []
       @file_list = file_list || []
     end
 

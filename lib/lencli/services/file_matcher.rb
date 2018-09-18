@@ -1,10 +1,10 @@
+require "lencli/services/callable/callable"
+
 module LenCLI
   class FileMatcher
     attr_reader :file_list, :errors
 
-    def self.call(*args)
-      self.new(*args).call
-    end
+    include LenCLI::Callable
 
     def initialize(options)
       @errors = []
@@ -19,10 +19,6 @@ module LenCLI
       set_matching_file_list
       verify_matches_found
       self
-    end
-
-    def successful?
-      !@errors&.any?
     end
 
     private
