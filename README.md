@@ -1,37 +1,73 @@
-![header image](images/lencli_logo.png)
+﻿![header image](images/lencli_logo.png)
 # Lencli
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/lencli`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A marvelous command line utility that performs wonders!
+Recursively search a directory and scrape gps data from images.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'lencli'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install lencli
+bundle install
 
 ## Usage
 
-TODO: Write usage instructions here
+### To run command line utility:
+bundle exec bin/lencli
 
-## Development
+With no arguments the short help descriptions are printed:
+```ruby
+Commands:
+  lencli gps_grab [SEARCH_PATH]  # Extract gps coordinates from image files.
+  lencli help [COMMAND]          # Describe available commands or one specifi...
+  lencli version                 # Display command-line version number.
+  ```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+bundle exec bin/lencli help gps_grab
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Specifying a command name with help will display the long description version:
+```ruby
+Usage:
+  lencli gps_grab [SEARCH_PATH]
 
-## Contributing
+Options:
+  --of, [--output-format=OUTPUT_FORMAT]  
+                                        # Default: csv
+                                        # Possible values: csv, html
+  --op, [--output-path=OUTPUT_PATH]      
+                                        # Default: ./lencli_output
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/lencli.
+Description:
+  Recursively searches under the directory SEARCH_PATH for jpg files and 
+  extracts the gps latitude and longitude from the image file if location data 
+  is found. If a SEARCH_PATH is not provided, the current directory will be used 
+  as the starting point for the search.
 
+  You can provide an optional parameter, --output_format="html", which will 
+  specify whether the generated results are CSV or HTML. The default value is 
+  the "csv" type.
+
+  Examples:
+
+  > $ gps_grab
+
+  > $ gps_grab /home/my_home/search_directory
+
+  > $ gps_grab /home/my_home/search_directory --output_format "html"
+
+  > $ gps_grab /home/my_home/search_directory --op "/home/me/img.csv"
+```
+
+### To run unit tests:
+bundle exec rspec
+
+```ruby
+GPSExtractionAction.call
+    a valid file list value
+      returns a list of gps data
+    a nil file list value
+      returns an empty list of gps data
+    an empty array file list value
+      returns an empty list of gps data
+      ..
+      ..
+      ..
+```

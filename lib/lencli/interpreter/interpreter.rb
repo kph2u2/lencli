@@ -14,9 +14,9 @@ module LenCLI
 
     ###################### GPS_GRAB #####################
     method_option :output_format,
-      default: "csv", enum: ["csv", "html"], :aliases => "-of"
+      default: "csv", enum: ["csv", "html"], :aliases => "--of"
     method_option :output_path,
-      default: "./lencli.html", :aliases => "-op"
+      default: "./lencli_output", :aliases => "--op"
 
     desc "gps_grab [SEARCH_PATH]",
          "Extract gps coordinates from image files."
