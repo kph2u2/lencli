@@ -5,8 +5,9 @@ require "lencli/services/file_matcher"
 describe LenCLI::Commander do
   describe ".gps_grab" do
     let(:subject) { described_class.gps_grab(options) }
-    let(:options) {{ search_path: search_path, output_format: "csv" }}
+    let(:options) {{ search_path: search_path, output_format: output_format }}
     let(:search_path) { "home/search_me/" }
+    let(:output_format) { "csv" }
     let(:matching_files) do
       [
         "#{search_path}/My_Filename_One",
@@ -44,7 +45,7 @@ describe LenCLI::Commander do
           subject
         end
 
-        it "passes the gps search action and options to ActionOutputService" do
+        it "passes the gps search action and options to ActionOutputervice" do
           expect(LenCLI::ActionOutputService)
             .to receive(:call).with(action_svc, options)
             .and_return(output_svc)
@@ -70,8 +71,19 @@ describe LenCLI::Commander do
     end
 
     context "the action output service" do
+      context "format option is specified" do
+        let(:output_format) { "html" }
+
+        it "specifies the output format" do
+          expect(LenCLI::ActionOutputService)
+            .to receive(:call)
+            .with(action_svc, hash_including(output_format: output_format))
+          subject
+        end
+      end
+
       context "generates the output for the action" do
-        it "no exception is raised" do
+        it "raises no exception" do
           expect{ subject }.not_to raise_error
         end
       end

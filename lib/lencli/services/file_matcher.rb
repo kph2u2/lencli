@@ -36,7 +36,7 @@ module LenCLI
     def verify_matches_found
       unless @file_list&.any?
         @errors <<
-          "No files found with suffix(es) #{@file_types} in #{@search_path}"
+          "No files found with suffix(es) #{@file_types} under #{@search_path}"
       end
     end
 
