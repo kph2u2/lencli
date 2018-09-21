@@ -8,7 +8,6 @@ module LenCLI
     include LenCLI::Callable
 
     def initialize(file_list)
-      @errors = []
       @file_list = file_list || []
     end
 

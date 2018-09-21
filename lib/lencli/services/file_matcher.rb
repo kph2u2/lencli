@@ -2,12 +2,11 @@ require "lencli/services/callable/callable"
 
 module LenCLI
   class FileMatcher
-    attr_reader :file_list, :errors
+    attr_reader :file_list
 
     include LenCLI::Callable
 
     def initialize(options)
-      @errors = []
       @search_path = options[:search_path] || "./"
       @file_types = options[:file_types] || "jpg"
     end
@@ -25,7 +24,7 @@ module LenCLI
 
     def verify_search_directory_exists
       unless Dir.exists?(@search_path)
-        @errors << "#{@search_path} is not a valid directory to search"
+        add_error("#{@search_path} is not a valid directory to search")
       end
     end
 
@@ -35,8 +34,9 @@ module LenCLI
 
     def verify_matches_found
       unless @file_list&.any?
-        @errors <<
+        add_error(
           "No files found with suffix(es) #{@file_types} under #{@search_path}"
+        )
       end
     end
 

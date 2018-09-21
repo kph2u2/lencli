@@ -4,12 +4,9 @@ require "lencli/services/callable/callable"
 
 module LenCLI
   class ActionOutputService
-    attr_reader :errors
-
     include LenCLI::Callable
 
     def initialize(action, options)
-      @errors = []
       @action = action
       @output_format = options[:output_format]
       @output_path = options[:output_path]
@@ -20,9 +17,9 @@ module LenCLI
         output_file.write(file_contents)
         output_file.close
       rescue Errno::EISDIR => error
-        @errors << "Cannot write to #{@output_path} as it's a directory."
+        add_error("Cannot write to #{@output_path} as it's a directory.")
       rescue Errno::EACCES => error
-        @errors << "Cannot write to #{@output_path} due to permissions."
+        add_error("Cannot write to #{@output_path} due to permissions.")
       end
       self
     end
