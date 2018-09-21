@@ -39,7 +39,7 @@ describe "GPSExtractionAction" do
         "/home/image_file_3",
       ]
     } 
-    let(:filter_missing) { "false" }
+    let(:filter_missing) { false }
     let(:subject) do
       LenCLI::GPSExtractionAction.call(file_list, filter_missing).results
     end
@@ -58,7 +58,7 @@ describe "GPSExtractionAction" do
       end
 
       context "with filter missing option set to true" do
-        let(:filter_missing) { "true" }
+        let(:filter_missing) { true }
         let(:expected_gps_data) do
           [
             ["image_file_1", "38,24,0N", "N", "10,41.735887E", "W"],
