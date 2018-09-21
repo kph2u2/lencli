@@ -10,7 +10,8 @@ module LenCLI
       file_svc = FileMatcher.call(options)
       raise CommanderError, file_svc.errors unless file_svc.successful?
 
-      action = GPSExtractionAction.call(file_svc.file_list)
+      action =
+        GPSExtractionAction.call(file_svc.file_list, options[:filter_missing])
 
       output_svc = ActionOutputService.call(action, options)
       raise CommanderError, output_svc.errors unless output_svc.successful?

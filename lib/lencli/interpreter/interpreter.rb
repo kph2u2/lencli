@@ -19,6 +19,8 @@ module LenCLI
       default: "./lencli_output", :aliases => "--op"
     method_option :file_types,
       default: "jpg", :aliases => "--ft"
+    method_option :filter_missing,
+      default: "false", :aliases => "--fm", type: :boolean
 
     desc "gps_grab [SEARCH_PATH]",
          "Extract gps coordinates from image files."
@@ -31,9 +33,20 @@ module LenCLI
       the starting point for the search.
 
 
-      You can provide an optional parameter, --output_format="html", which will
-      specify whether the generated results are CSV or HTML. The default value
-      is the "csv" type.
+      Optional parameter --output-format=OUTPUT_FORMAT will specify whether
+      the generated results are CSV or HTML. The default value is the "csv"
+      type.
+
+      Optional parameter --output-path=OUTPUT_PATH will specify the destination
+      output file location. The default value is "./lencli_output".
+
+      Optional parameter --file-types=FILE_TYPES will specify the image file
+      suffixes that will be used to search for exif data. The default value is
+      "jpg".
+
+      Optional parameter --filter-missing or --no-filter-missing is a boolean
+      value to determine whether the returned data will filter results where
+      there is no exif data present.
 
       Examples:
 

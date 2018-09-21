@@ -41,7 +41,7 @@ describe LenCLI::Commander do
       context "successfully finds a list of matching files" do
         it "passes the file list to GPSExtractionAction" do
           expect(LenCLI::GPSExtractionAction)
-            .to receive(:call).with(matching_files)
+            .to receive(:call).with(matching_files, nil)
           subject
         end
 

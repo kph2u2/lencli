@@ -29,21 +29,36 @@ Usage:
   lencli gps_grab [SEARCH_PATH]
 
 Options:
-  --of, [--output-format=OUTPUT_FORMAT]  
-                                        # Default: csv
-                                        # Possible values: csv, html
-  --op, [--output-path=OUTPUT_PATH]      
-                                        # Default: ./lencli_output
+  --of, [--output-format=OUTPUT_FORMAT]            
+                                                   # Default: csv
+                                                   # Possible values: csv, html
+  --op, [--output-path=OUTPUT_PATH]                
+                                                   # Default: ./lencli_output
+  --ft, [--file-types=FILE_TYPES]                  
+                                                   # Default: jpg
+  --fm, [--filter-missing], [--no-filter-missing]  
+                                                   # Default: false
 
 Description:
+
   Recursively searches under the directory SEARCH_PATH for jpg files and 
   extracts the gps latitude and longitude from the image file if location data 
   is found. If a SEARCH_PATH is not provided, the current directory will be used 
   as the starting point for the search.
 
-  You can provide an optional parameter, --output_format="html", which will 
-  specify whether the generated results are CSV or HTML. The default value is 
-  the "csv" type.
+  Optional parameter --output-format=OUTPUT_FORMAT will specify whether the 
+  generated results are CSV or HTML. The default value is the "csv" type.
+
+  Optional parameter --output-path=OUTPUT_PATH will specify the destination 
+  output file location. The default value is "./lencli_output".
+
+  Optional parameter --file-types=FILE_TYPES will specify the image file 
+  suffixes that will be used to search for exif data. The default value is 
+  "jpg".
+
+  Optional parameter --filter-missing or --no-filter-missing is a boolean value 
+  to determine whether the returned data will filter results where there is no 
+  exif data present.
 
   Examples:
 

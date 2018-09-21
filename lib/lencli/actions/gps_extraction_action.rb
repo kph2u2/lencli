@@ -7,8 +7,9 @@ module LenCLI
 
     include LenCLI::Callable
 
-    def initialize(file_list)
+    def initialize(file_list, filter_missing=false)
       @file_list = file_list || []
+      @filter_missing = filter_missing
     end
 
     def call
@@ -33,15 +34,17 @@ module LenCLI
     end
 
     def image_name_and_coordinates(matching_path)
-      image_metadata = MiniMagick::Image.open(matching_path)
+      exif = MiniMagick::Image.open(matching_path).exif
       filename = File.basename(matching_path)
+
+      return nil if !exif_exists?(exif) && @filter_missing
 
       [
         filename,
-        image_metadata.exif["GPSLatitude"],
-        image_metadata.exif["GPSLatitudeRef"],
-        image_metadata.exif["GPSLongitude"],
-        image_metadata.exif["GPSLongitudeRef"],
+        exif["GPSLatitude"],
+        exif["GPSLatitudeRef"],
+        exif["GPSLongitude"],
+        exif["GPSLongitudeRef"],
       ]
     rescue Errno::EACCES
       warn("WARNING: Missing required permissions to open #{matching_path}")
@@ -49,6 +52,14 @@ module LenCLI
       warn("WARNING: #{matching_path} is not a valid image file")
     rescue MiniMagick::Error => error
       warn("WARNING: #{matching_path} caused #{error.message}")
+    end
+
+    def exif_exists?(exif)
+      exif &&
+      (exif.key?("GPSLatitude") ||
+      exif.key?("GPSLatitudeRef") ||
+      exif.key?("GPSLongitude") ||
+      exif.key?("GPSLongitudeRef"))
     end
   end
 end
