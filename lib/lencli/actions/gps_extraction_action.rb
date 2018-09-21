@@ -18,7 +18,7 @@ module LenCLI
     end
 
     def headers
-      ["Image Filename", "Lat", "Long"]
+      ["Image Filename", "Lat", "Lat Ref", "Long", "Long Ref"]
     end
 
     private
@@ -40,12 +40,16 @@ module LenCLI
       [
         filename,
         image_metadata.exif["GPSLatitude"],
+        image_metadata.exif["GPSLatitudeRef"],
         image_metadata.exif["GPSLongitude"],
+        image_metadata.exif["GPSLongitudeRef"],
       ]
     rescue Errno::EACCES
       warn("WARNING: Missing required permissions to open #{matching_path}")
     rescue MiniMagick::Invalid
       warn("WARNING: #{matching_path} is not a valid image file")
+    rescue MiniMagick::Error => error
+      warn("WARNING: #{matching_path} caused #{error.message}")
     end
   end
 end

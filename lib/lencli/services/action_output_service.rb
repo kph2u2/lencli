@@ -30,19 +30,19 @@ module LenCLI
     private
 
     def file_contents
-      output_klass.new(@action, @output_path).output
+      @file_contents ||= output_klass.new(@action, @output_path).output
     end
 
     def output_file
-      File.open(@output_path, 'w')
+      @file ||= File.open(@output_path, 'w')
     end
 
     def output_klass
-      Object.const_get(output_klass_name)
+      @klass ||= Object.const_get(output_klass_name)
     end
 
     def output_klass_name
-      "LenCLI::#{@output_format.capitalize}ActionOutput"
+      @klass_name ||= "LenCLI::#{@output_format.capitalize}ActionOutput"
     end
   end
 end
