@@ -14,8 +14,18 @@ describe "GPSExtractionAction" do
     end
     let(:image_metadata) do
       [
-        { "GPSLatitude" => "38,24,0N", "GPSLongitude" => "10,41.735887E" },
-        { "GPSLatitude" => "50,11,5N", "GPSLongitude" => "05,99.8734892E" },
+        {
+          "GPSLatitude" => "38,24,0N",
+          "GPSLatitudeRef" => "N",
+          "GPSLongitude" => "10,41.735887E",
+          "GPSLongitudeRef" => "W",
+        },
+        {
+          "GPSLatitude" => "50,11,5N",
+          "GPSLatitudeRef" => "N",
+          "GPSLongitude" => "05,99.8734892E",
+          "GPSLongitudeRef" => "E",
+        },
       ]
     end
     let(:image_object) { double("MiniMagick::Image") } 
@@ -25,8 +35,8 @@ describe "GPSExtractionAction" do
     context "a valid file list value" do
       let(:expected_gps_data) do
         [
-          ["image_file_1", "38,24,0N", "05,99.8734892E"],
-          ["image_file_2", "50,11,5N", "05,99.8734892E"],
+          ["image_file_1", "38,24,0N", "N", "05,99.8734892E", "E"],
+          ["image_file_2", "50,11,5N", "N", "05,99.8734892E", "E"],
         ]
       end
 
