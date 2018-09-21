@@ -73,7 +73,9 @@ module LenCLI
         </style>
 
         <table>
-          <caption>Geolocation Data</caption>
+          <caption>
+            Geolocation Data compiled at <%=Time.now.strftime "%Y-%m-%d %H:%M"%>
+          </caption>
           <thead>
             <tr>
               <% @action.headers.each do |header_value| %>
