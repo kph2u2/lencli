@@ -55,13 +55,14 @@ describe LenCLI::Commander do
 
       context "encounters an error condition" do
         let(:error_message) { "An error occurred" }
-
-        it "raises a CommanderError with correct error message" do
+        before do
           allow(file_svc)
             .to receive(:successful?).and_return(false)
           allow(file_svc)
             .to receive(:errors).and_return([error_message])
+        end
 
+        it "raises a CommanderError with correct error message" do
           expect{ subject }
             .to raise_error(
               LenCLI::Commander::CommanderError, /"#{error_message}"/
@@ -90,13 +91,14 @@ describe LenCLI::Commander do
 
       context "encounters an error generating the output for the action" do
         let(:error_message) { "An error occurred" }
-
-        it "raises a CommanderError with correct error message" do
+        before do
           allow(output_svc)
             .to receive(:successful?).and_return(false)
           allow(output_svc)
             .to receive(:errors).and_return([error_message])
+        end
 
+        it "raises a CommanderError with correct error message" do
           expect{ subject }
             .to raise_error(
               LenCLI::Commander::CommanderError, /"#{error_message}"/
